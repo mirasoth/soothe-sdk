@@ -98,6 +98,16 @@ LOOP_CLARIFICATION_DEFERRED = "soothe.loop.clarification.deferred"
 # Stream termination
 STREAM_END = "soothe.stream.end"
 
+# Protocol-primitive events (wire-visible constants shared across packages;
+# canonical home is the SDK as the protocol-contracts layer. nano and the
+# host re-export these rather than redefine the literals.)
+ERROR = "soothe.error.general.failed"
+LLM_RETRY_ATTEMPT = "soothe.cognition.llm.retry.attempt"
+MEMORY_RECALLED = "soothe.internal.memory.recalled"
+MEMORY_STORED = "soothe.internal.memory.stored"
+POLICY_CHECKED = "soothe.internal.policy.checked"
+POLICY_DENIED = "soothe.internal.policy.denied"
+
 # Message events (DETAILED level)
 MESSAGE_RECEIVED = "soothe.protocol.message.received"
 MESSAGE_SENT = "soothe.protocol.message.sent"
@@ -138,6 +148,13 @@ __all__ = [
     "LOOP_CLARIFICATION_ANSWERED",
     "LOOP_CLARIFICATION_DEFERRED",
     "STREAM_END",
+    # Protocol-primitive constants (canonical home; re-exported by nano + host)
+    "ERROR",
+    "LLM_RETRY_ATTEMPT",
+    "MEMORY_RECALLED",
+    "MEMORY_STORED",
+    "POLICY_CHECKED",
+    "POLICY_DENIED",
     # Message (DETAILED)
     "MESSAGE_RECEIVED",
     "MESSAGE_SENT",

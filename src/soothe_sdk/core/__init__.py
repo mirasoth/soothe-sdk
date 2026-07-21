@@ -41,6 +41,13 @@ __all__ = [
     # Message (DETAILED)
     "MESSAGE_RECEIVED",
     "MESSAGE_SENT",
+    # Protocol-primitive constants (canonical home; re-exported by nano + host)
+    "ERROR",
+    "LLM_RETRY_ATTEMPT",
+    "MEMORY_RECALLED",
+    "MEMORY_STORED",
+    "POLICY_CHECKED",
+    "POLICY_DENIED",
     # Constants
     "DEFAULT_STRANGE_LOOP_MAX_ITERATIONS",
     # Exceptions
@@ -61,9 +68,15 @@ __all__ = [
 
 from soothe_sdk.core.events import (
     DEFAULT_STRANGE_LOOP_MAX_ITERATIONS,
+    ERROR,
+    LLM_RETRY_ATTEMPT,
+    MEMORY_RECALLED,
+    MEMORY_STORED,
     MESSAGE_RECEIVED,
     MESSAGE_SENT,
     PLAN_CREATED,
+    POLICY_CHECKED,
+    POLICY_DENIED,
     STRANGE_LOOP_COMPLETED,
     STRANGE_LOOP_ITERATION,
     STRANGE_LOOP_PLAN_DECISION,
