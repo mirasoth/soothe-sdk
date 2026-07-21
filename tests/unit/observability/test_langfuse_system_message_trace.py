@@ -255,6 +255,7 @@ def test_on_chain_end_does_not_patch_chain_input() -> None:
 
 def test_sanitize_cancelled_error_replaces_object_sentinel() -> None:
     """LangGraph cancels tasks with ``task.cancel(object())``; str() of that is unreadable."""
+    pytest.importorskip("langfuse")
     import asyncio
 
     from soothe_sdk.observability.langfuse.callback_handler import (
@@ -271,6 +272,7 @@ def test_sanitize_cancelled_error_replaces_object_sentinel() -> None:
 
 
 def test_sanitize_cancelled_error_passes_through_other_errors() -> None:
+    pytest.importorskip("langfuse")
     from soothe_sdk.observability.langfuse.callback_handler import (
         SootheLangfuseCallbackHandler,
     )
