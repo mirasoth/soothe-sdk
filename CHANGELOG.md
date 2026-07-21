@@ -5,6 +5,13 @@ All notable changes to soothe-sdk are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-07-21
+
+### Added
+- Protocol-primitive event constants: `ERROR`, `LLM_RETRY_ATTEMPT`, `MEMORY_RECALLED`, `MEMORY_STORED`, `POLICY_CHECKED`, `POLICY_DENIED` — canonical wire-visible constants shared across packages.
+
+[Compare with previous version]: https://github.com/mirasoth/soothe-sdk/compare/v1.0.3...v1.0.4
+
 ## [1.0.3] - 2026-07-21
 
 ### Added
