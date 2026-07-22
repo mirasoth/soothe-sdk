@@ -4,9 +4,10 @@ This module provides the base event classes that all specific events inherit fro
 Module-specific events are defined in their respective modules and registered via
 ``register_event()``.
 
-All progress events use 4-segment type strings
-``soothe.<domain>.<component>.<action>`` with six domains:
-lifecycle, protocol, tool, subagent, output, error.
+Progress events use type strings ``soothe.<domain>.<component>.<action>``.
+Domains in active use include cognition, internal, subagent, system, mcp, loop,
+stream, error, tool, output, protocol, and skillify. Community plugins may
+introduce additional ``soothe.subagent.<plugin>.*`` types when they load.
 """
 
 from __future__ import annotations
@@ -69,14 +70,8 @@ class ErrorEvent(SootheEvent):
 # Plan events
 PLAN_CREATED = "soothe.cognition.plan.created"
 
-# Tool events (DEBUG/DETAILED level)
-TOOL_STARTED = "soothe.tool.execution.started"
-TOOL_COMPLETED = "soothe.tool.execution.completed"
-TOOL_ERROR = "soothe.tool.execution.error"
-
 # Agent loop events (DEBUG level; wire ``mode=custom`` types)
 STRANGE_LOOP_STARTED = "soothe.cognition.strange_loop.started"
-STRANGE_LOOP_ITERATION = "soothe.cognition.strange_loop.iterated"
 STRANGE_LOOP_COMPLETED = "soothe.cognition.strange_loop.completed"
 STRANGE_LOOP_STEP_STARTED = "soothe.cognition.strange_loop.step.started"
 STRANGE_LOOP_STEP_QUEUED = "soothe.cognition.strange_loop.step.queued"
@@ -108,10 +103,6 @@ MEMORY_STORED = "soothe.internal.memory.stored"
 POLICY_CHECKED = "soothe.internal.policy.checked"
 POLICY_DENIED = "soothe.internal.policy.denied"
 
-# Message events (DETAILED level)
-MESSAGE_RECEIVED = "soothe.protocol.message.received"
-MESSAGE_SENT = "soothe.protocol.message.sent"
-
 # Agent loop configuration constants
 DEFAULT_STRANGE_LOOP_MAX_ITERATIONS = 10
 
@@ -125,13 +116,8 @@ __all__ = [
     "SubagentEvent",
     # Event type constants - plan
     "PLAN_CREATED",
-    # Tool (DEBUG/DETAILED)
-    "TOOL_STARTED",
-    "TOOL_COMPLETED",
-    "TOOL_ERROR",
     # Agent loop (DEBUG)
     "STRANGE_LOOP_STARTED",
-    "STRANGE_LOOP_ITERATION",
     "STRANGE_LOOP_COMPLETED",
     "STRANGE_LOOP_STEP_STARTED",
     "STRANGE_LOOP_STEP_QUEUED",
@@ -155,9 +141,6 @@ __all__ = [
     "MEMORY_STORED",
     "POLICY_CHECKED",
     "POLICY_DENIED",
-    # Message (DETAILED)
-    "MESSAGE_RECEIVED",
-    "MESSAGE_SENT",
     # Constants
     "DEFAULT_STRANGE_LOOP_MAX_ITERATIONS",
 ]
