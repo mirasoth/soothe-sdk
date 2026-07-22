@@ -5,6 +5,17 @@ All notable changes to soothe-sdk are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2026-07-22
+
+### Removed
+- Unused tool event constants (`TOOL_STARTED`, `TOOL_COMPLETED`, `TOOL_ERROR`), message constants (`MESSAGE_RECEIVED`, `MESSAGE_SENT`), and `STRANGE_LOOP_ITERATION` — no package emits these wire types.
+
+### Changed
+- Update module-path references from the removed `soothe.foundation` namespace to `soothe.events` / `soothe.sloop` in serde type registration and registry docstrings.
+- Replace the hard-coded README version line with a dynamic PyPI version badge.
+
+[Compare with previous version]: https://github.com/mirasoth/soothe-sdk/compare/v1.0.4...v1.0.5
+
 ## [1.0.4] - 2026-07-21
 
 ### Added
