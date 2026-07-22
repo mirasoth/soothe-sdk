@@ -683,6 +683,10 @@ class ProtocolError(Exception):
     ``code``, human-readable ``message``, and optional ``data`` from the
     structured error object.
 
+    Server-side daemon handlers use ``soothe_daemon.protocol.RpcProtocolError``
+    (a richer type with ``ErrorCode`` and serialization helpers); this class is
+    the client/wire-facing exception only.
+
     Attributes:
         code: Numeric error code from the protocol-1 error code registry.
         message: Human-readable error summary.
