@@ -1,9 +1,11 @@
 # Soothe SDK
 
+![PyPI - Version](https://img.shields.io/pypi/v/soothe-sdk?label=latest&logo=pypi&logoColor=white)
+
 A lightweight, decorator-based SDK for building Soothe plugins and shared
 contracts (events, wire codec, display/UX helpers, protocols).
 
-**Version:** 1.0.3 (stable). The WebSocket transport client lives in
+The WebSocket transport client lives in
 [`soothe-client-python`](https://github.com/mirasoth/soothe-client-python)
 (`soothe_client`), not in this package.
 
