@@ -2,7 +2,7 @@
 
 This module owns the single source of truth for event metadata types
 (``EventPriority`` / ``EventMeta`` / ``EventRegistry``) and the process-wide
-``REGISTRY`` singleton. nano, the host (``soothe.foundation.events``), and the
+``REGISTRY`` singleton. nano, the host (``soothe.events``), and the
 daemon all register into and read from this registry, so event type strings
 have one authoritative index regardless of which package defined them.
 
