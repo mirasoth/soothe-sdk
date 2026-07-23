@@ -122,31 +122,6 @@ def _configurable_thread_key(runnable_config: dict[str, Any] | None) -> str | No
     return text or None
 
 
-_EXECUTE_STEP_NAME = "execute-step"
-_MODEL_CHAIN_NAME = "model"
-
-
-def _is_execute_step_run_name(name: str | None) -> bool:
-    """True when a chain run_name marks an Execute phase wave (``...:execute-step``)."""
-    if not name:
-        return False
-    text = str(name).strip()
-    return text == _EXECUTE_STEP_NAME or text.endswith(f":{_EXECUTE_STEP_NAME}")
-
-
-def _is_model_chain_run_name(name: str | None) -> bool:
-    """True when a chain run_name marks LangGraph's inner model node."""
-    if not name:
-        return False
-    return str(name).strip() == _MODEL_CHAIN_NAME
-
-
-def _should_mirror_system_prompt_on_chain(name: str | None) -> bool:
-    """Chain spans no longer receive mirrored system prompts (generation-only)."""
-    _ = name
-    return False
-
-
 class _LangfuseTracePinnedParent:
     """Inject ``trace_context`` into root LLM observations (Langfuse chain-only gap)."""
 
@@ -171,24 +146,6 @@ def _is_langfuse_root_client(obs: Any) -> bool:
     except ImportError:
         return False
     return isinstance(obs, Langfuse)
-
-
-def _patch_chain_input_with_system_message(
-    inputs: Any,
-    system_prompt: str,
-) -> Any:
-    """Prepend a SystemMessage to the chain ``messages`` list when available."""
-    if not isinstance(inputs, dict):
-        return inputs
-    msgs = inputs.get("messages")
-    if not isinstance(msgs, list):
-        return inputs
-    out = dict(inputs)
-    if msgs and isinstance(msgs[0], SystemMessage):
-        out["messages"] = [SystemMessage(content=system_prompt), *msgs[1:]]
-    else:
-        out["messages"] = [SystemMessage(content=system_prompt), *msgs]
-    return out
 
 
 if LANGFUSE_AVAILABLE:

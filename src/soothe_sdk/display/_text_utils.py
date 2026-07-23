@@ -1,18 +1,6 @@
 """Internal text utilities for tool formatting (not part of public API)."""
 
 
-def normalize_tool_name(tool_name: str) -> str:
-    """Normalize tool name to snake_case for comparison and lookup.
-
-    Args:
-        tool_name: Raw tool name (may contain dashes or spaces).
-
-    Returns:
-        Lowercase snake_case name.
-    """
-    return tool_name.lower().replace("-", "_").replace(" ", "_")
-
-
 def text_looks_like_error(text: str) -> bool:
     """Return True if text content suggests a tool failure.
 

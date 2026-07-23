@@ -106,8 +106,3 @@ def ensure_langfuse_client(soothe_config: SootheConfigLike) -> None:
         executor = _get_executor()
         executor.submit(_init_langfuse_client_sync, kwargs)
         logger.debug("Langfuse client initialization submitted to background thread")
-
-
-async def ensure_langfuse_client_async(soothe_config: SootheConfigLike) -> None:
-    """Async wrapper for Langfuse client initialization."""
-    ensure_langfuse_client(soothe_config)

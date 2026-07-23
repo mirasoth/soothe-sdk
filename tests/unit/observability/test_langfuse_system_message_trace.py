@@ -11,10 +11,6 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from soothe_sdk.observability.langfuse.callback_handler import (
     _apply_effective_system_prompt_to_batches,
-    _is_execute_step_run_name,
-    _is_model_chain_run_name,
-    _patch_chain_input_with_system_message,
-    _should_mirror_system_prompt_on_chain,
 )
 from soothe_sdk.observability.langfuse.system_hint import (
     clear_langfuse_system_prompt_hint,
@@ -177,58 +173,6 @@ def test_on_llm_end_passes_traced_input_to_parent() -> None:
         parent.assert_called_once()
         assert parent.call_args.kwargs["inputs"] == traced
     assert run_id not in handler._generation_traced_inputs
-
-
-def test_is_execute_step_run_name_matches_prefixed_and_bare() -> None:
-    assert _is_execute_step_run_name("execute-step")
-    assert _is_execute_step_run_name("soothe-dev:execute-step")
-    assert _is_execute_step_run_name("soothe:execute-step")
-    assert not _is_execute_step_run_name("execute")
-    assert not _is_execute_step_run_name("plan-assess")
-    assert not _is_execute_step_run_name(":execute-step-ish")
-    assert not _is_execute_step_run_name(None)
-
-
-def test_is_model_chain_run_name() -> None:
-    assert _is_model_chain_run_name("model")
-    assert not _is_model_chain_run_name("model-extra")
-    assert not _is_model_chain_run_name(None)
-
-
-def test_should_mirror_system_prompt_on_chain() -> None:
-    assert not _should_mirror_system_prompt_on_chain("model")
-    assert not _should_mirror_system_prompt_on_chain("soothe-dev:execute-step")
-    assert not _should_mirror_system_prompt_on_chain("plan-assess")
-
-
-def test_patch_chain_input_prepends_system_message() -> None:
-    patched = _patch_chain_input_with_system_message(
-        {"messages": [HumanMessage(content="hi")], "workspace": "/w"},
-        "<WORKSPACE_RULES>x</WORKSPACE_RULES>",
-    )
-    assert isinstance(patched, dict)
-    assert patched["workspace"] == "/w"
-    msgs = patched["messages"]
-    assert isinstance(msgs[0], SystemMessage)
-    assert msgs[0].content == "<WORKSPACE_RULES>x</WORKSPACE_RULES>"
-    assert isinstance(msgs[1], HumanMessage)
-
-
-def test_patch_chain_input_replaces_existing_system_message() -> None:
-    patched = _patch_chain_input_with_system_message(
-        {"messages": [SystemMessage(content="short"), HumanMessage(content="hi")]},
-        "EFFECTIVE",
-    )
-    assert patched["messages"][0].content == "EFFECTIVE"
-    assert isinstance(patched["messages"][1], HumanMessage)
-
-
-def test_patch_chain_input_returns_unchanged_when_no_messages_list() -> None:
-    inp = {"workspace": "/w"}
-    out = _patch_chain_input_with_system_message(inp, "X")
-    assert out is inp
-    out2 = _patch_chain_input_with_system_message("scalar", "X")
-    assert out2 == "scalar"
 
 
 def test_on_chain_end_does_not_patch_chain_input() -> None:
