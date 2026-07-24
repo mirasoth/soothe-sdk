@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any, Protocol, runtime_checkable
 from uuid import uuid4
 
@@ -25,7 +25,7 @@ class MemoryItem(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid4()))
     content: str
     source_thread: str | None = None
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     tags: list[str] = Field(default_factory=list)
     importance: float = 0.5
     metadata: dict[str, Any] = Field(default_factory=dict)
