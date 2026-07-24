@@ -23,6 +23,65 @@ SOOTHE_DATA_DIR: str = os.environ.get("SOOTHE_DATA_DIR", str(SOOTHE_HOME / "data
 
 """Default Soothe data directory. Overridable via `SOOTHE_DATA_DIR` env var."""
 
+# SQLite purpose databases (RFC-801 / IG-647). Hard cut: no legacy flat paths.
+SQLITE_DATABASES_SUBDIR: str = "databases"
+
+
+def resolve_databases_dir() -> Path:
+    """Return ``$SOOTHE_DATA_DIR/databases`` (creates nothing)."""
+    return Path(SOOTHE_DATA_DIR) / SQLITE_DATABASES_SUBDIR
+
+
+def resolve_sqlite_db_path(purpose: str) -> Path:
+    """Return ``$SOOTHE_DATA_DIR/databases/{purpose}.db``.
+
+    Args:
+        purpose: Logical store name (e.g. ``checkpoints``, ``persist``).
+    """
+    name = purpose.strip().removesuffix(".db")
+    return resolve_databases_dir() / f"{name}.db"
+
+
+def resolve_checkpoints_db_path() -> Path:
+    """StrangeLoop / loop checkpoints SQLite path."""
+    return resolve_sqlite_db_path("checkpoints")
+
+
+def resolve_context_db_path() -> Path:
+    """Context Engine SQLite path."""
+    return resolve_sqlite_db_path("context")
+
+
+def resolve_display_db_path() -> Path:
+    """Display card ledger SQLite path."""
+    return resolve_sqlite_db_path("display")
+
+
+def resolve_cron_db_path() -> Path:
+    """Cron job store SQLite path."""
+    return resolve_sqlite_db_path("cron")
+
+
+def resolve_identity_db_path() -> Path:
+    """Identity service SQLite path."""
+    return resolve_sqlite_db_path("identity")
+
+
+def resolve_metadata_db_path() -> Path:
+    """ThreadInfo / durability metadata SQLite path."""
+    return resolve_sqlite_db_path("metadata")
+
+
+def resolve_persist_db_path() -> Path:
+    """Persist KV SQLite path."""
+    return resolve_sqlite_db_path("persist")
+
+
+def resolve_vectors_db_path() -> Path:
+    """Vector store (sqlite-vec) SQLite path."""
+    return resolve_sqlite_db_path("vectors")
+
+
 # Default execution timeout for shell commands (seconds)
 DEFAULT_EXECUTE_TIMEOUT: int = 60
 
@@ -97,7 +156,18 @@ __all__ = [
     "SOOTHE_DATA_DIR",
     "SOOTHE_HOME",
     "DEFAULT_EXECUTE_TIMEOUT",
+    "SQLITE_DATABASES_SUBDIR",
     "migrate_data_to_subdir",
+    "resolve_checkpoints_db_path",
+    "resolve_context_db_path",
+    "resolve_cron_db_path",
+    "resolve_databases_dir",
+    "resolve_display_db_path",
+    "resolve_identity_db_path",
+    "resolve_metadata_db_path",
+    "resolve_persist_db_path",
+    "resolve_sqlite_db_path",
+    "resolve_vectors_db_path",
     # Types
     "CliConfigProtocol",
     "DaemonConfigProtocol",
